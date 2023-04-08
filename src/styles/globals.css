@@ -1,27 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --very-dark-blue: hsl(229, 57%, 11%);
+  --dark-blue: hsl(228, 56%, 26%);
+  --grayish-blue: hsl(227, 47%, 96%);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: hsl(243, 100%, 93%);
+  background-image: url("/images/bg-desktop.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: var(--very-dark-blue);
+  font-family: "Raleway", sans-serif;
+}
+
+.files-button {
+  background-color: var(--very-dark-blue);
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  height: 42px;
+  width: 42px;
+  padding: 10px;
+}
+
+.files-button:hover {
+  background-color: hsl(335, 100%, 65%);
+  color: hsl(227, 47%, 96%);
+}
+
+#logo-controls {
+  background-color: var(--dark-blue);
+  padding: 40px;
+  border-radius: 0.25rem 90px 0.25rem 0.25rem;
+  width: 400px;
+}
+
+#upload-bar {
+  position: relative;
+  background-color: var(--dark-blue);
+  padding: 10px 40px;
+  border-radius: 0.25rem;
+  min-width: 800px;
+  display: flex;
+  align-self: flex-end;
+}
+
+.progress--bar {
+  background-color: var(--very-dark-blue);
+  border-radius: 0.25rem;
+  height: 20px;
+  width: 700px;
+  display: inline-block;
+  content: "";
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+small {
+  font-weight: bold;
+}
+
+.progress--bar--fill {
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    to right,
+    hsl(6, 100%, 80%) 0%,
+    hsl(335, 100%, 65%) 100%
+  );
+  border-radius: 0.25rem;
+  height: 18px;
+  width: 0;
+  display: inline-block;
+  content: "";
+}
+
+.comic-window {
+  position: absolute;
+  top: -60px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  width: 220px;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--very-dark-blue);
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.comic-window small {
+  color: var("grayish-blue");
+  font-size: 1rem;
+  font-weight: 400;
 }
