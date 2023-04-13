@@ -50,7 +50,7 @@ body {
   background-color: var(--dark-blue);
   padding: 10px 40px;
   border-radius: 0.25rem;
-  min-width: 800px;
+  min-width: 40vw;
   display: flex;
   align-self: flex-end;
 }
@@ -59,7 +59,7 @@ body {
   background-color: var(--very-dark-blue);
   border-radius: 0.25rem;
   height: 20px;
-  width: 700px;
+  width: 100%;
   display: inline-block;
   content: "";
 }
@@ -108,4 +108,26 @@ small {
   color: var("grayish-blue");
   font-size: 1rem;
   font-weight: 400;
+}
+
+.grid-template {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  margin: 40px 0;
+}
+
+.preview {
+  height: 370px;
+}
+
+#file {
+  display: none;
+}
+
+#file_label {
+  content: url("/images/icon-upload.svg");
+  height: 80px;
+  width: 100px;
 }

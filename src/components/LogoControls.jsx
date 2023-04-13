@@ -1,6 +1,10 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 
 const LogoControls = ({ toogleUploadForm }) => {
+
+  const router = useRouter()
+
   return (
     <header id="logo-controls" className="flex justify-items-center gap-3 flex-col">
     <Image 
@@ -10,7 +14,7 @@ const LogoControls = ({ toogleUploadForm }) => {
       height={100}
     />
     <div className="flex itemce gap-3 mt-3">
-    <button className="files-button">          
+    <button className="files-button" onClick={() => router.push('/documents')}>          
         <Image
           src="/images/icon-document.svg"
           alt="Upload"
