@@ -1,17 +1,52 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import { Fragment, useState, useRef } from 'react'
+import { toast } from 'react-toastify';
 
 export default function UploadForm({ isOpen, setIsOpen }) {  
 
+  const fileRef = useRef(null)
+  const [prevFile, setPrevFile] = useState(null)  
   function closeModal() {
     setIsOpen(false)
+    fileRef.current.value = ''
+    setPrevFile(null)
   }
 
+
+  const previewFile = (e) => {
+    const file = fileRef.current.files[0]    
+    const reader = new FileReader()
+    reader.addEventListener('load', () => {            
+      const prevImg = document.createElement('img')
+      prevImg.src = reader.result
+      setPrevFile(prevImg)
+    })
+
+    reader.readAsDataURL(file)    
+    // prev url file
+    
+  }
   
   const handledFile = (e) => {
     e.preventDefault()
-    const file = e.target.file.files[0]
-    console.log(file)
+    const file = e.target.file.files[0]    
+    var formdata = new FormData();
+    formdata.append("formdata", file);
+
+    var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+    };
+
+    fetch("http://localhost:4000/api/v1/upload", requestOptions)
+    .then(response => response.text())
+    .then(result =>{
+      console.log('result', result)
+      toast.success('Archivo subido con exito')
+      closeModal()
+    })
+    .catch(error => console.log('error', error));
   }
 
   return (
@@ -48,15 +83,20 @@ export default function UploadForm({ isOpen, setIsOpen }) {
                   >
                     Subir archivo
                   </Dialog.Title>
-                  <form className='flex flex-col gap-3' onSubmit={handledFile}>
-                    <input type="file" name="file" id="file" className="mt-4" />
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Upload file
-                    </button>
+                  <form className='flex items-center  flex-col gap-3' onSubmit={handledFile}>
+                    <label htmlFor="file" className='text-blue-900' id="file_label">Selecciona un archivo</label>
+                    <input type="file" name="file" id="file" className="mt-4" ref={fileRef} onChange={previewFile} />
+                    <picture>
+                      {prevFile && prevFile !== null && <img className='preview' src={prevFile.src} alt="preview" />}
+                    </picture>
+                    {
+                      prevFile && (
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        >Upload file</button>
+                      )
+                    }
                   </form>                                      
                 </Dialog.Panel>
               </Transition.Child>
